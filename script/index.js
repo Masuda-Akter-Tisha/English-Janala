@@ -31,9 +31,9 @@ const displayLessonWord = (words) => {
         const cardDiv = document.createElement ('div');
         cardDiv.className = 'bg-base-100 rounded-xl py-12 px-8 shadow-sm text-center space-y-6';
         cardDiv.innerHTML = `
-          <h2 class="text-3xl font-bold">${word.word}</h2>
+          <h2 class="text-3xl font-bold">${word.word ? word.word : 'শব্দ পাওয়া যায়নি'}</h2>
           <p class="text-xl font-medium">meaning / pronunciation</p>
-          <div class="font-bangla text-3xl font-semibold text-gray-600">"${word.meaning} / ${word.pronunciation}"</div>
+          <div class="font-bangla text-3xl font-semibold text-gray-600">"${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'} / ${word.pronunciation ? word.pronunciation : 'উচ্চারণ পাওয়া যায়নি'}"</div>
           <div class="flex justify-between">
             <button class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-circle-info"></i></button>
             <button class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-volume-high"></i></button>
