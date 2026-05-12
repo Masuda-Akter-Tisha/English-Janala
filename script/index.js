@@ -14,6 +14,17 @@ const loadLessonWord = (id) => {
 const displayLessonWord = (words) => {
     const wordContainer = document.getElementById ('word-container');
     wordContainer.innerHTML = '';
+
+    if (words.length < 1) {
+      wordContainer.innerHTML = `
+      <div class="col-span-full text-center space-y-3 py-8">
+          <img class = "mx-auto" src = "./assets/alert-error.png"/>
+          <p class="text-sm text-[#79716B]">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।</p>
+          <h2 class="text-4xl font-medium font-bangla">নেক্সট Lesson এ যান</h2>
+        </div>
+      `
+    } 
+
     words.forEach (word => {
         console.log(word);
         
