@@ -18,6 +18,18 @@ const manageSpinner = (status) => {
     wordContainer.classList.remove ('hidden');
   }
 }
+const manageModalSpinner = (status) => {
+  const spinner = document.getElementById ('spinner');
+  const modal = document.getElementById ('modal-details');
+  if (status === true) {
+    spinner.classList.remove ('hidden');
+    modal.classList.add ('hidden');
+  }
+  else {
+    spinner.classList.add ('hidden');
+    modal.classList.remove ('hidden');
+  }
+}
 
 const loadLessons = () => {
     fetch ('https://openapi.programming-hero.com/api/levels/all')
@@ -46,6 +58,7 @@ const loadLessonWord = (id) => {
 }
 
 const loadWordDetails = async (id) => {
+  manageModalSpinner (true);
   const url = `https://openapi.programming-hero.com/api/word/${id}`;
   const res = await fetch (url);
   const details = await res.json ();
@@ -78,6 +91,8 @@ const displayLoadWordDetails = (details) => {
 
   const modalWord = document.getElementById ('modal_word');
   modalWord.showModal ();
+
+  manageModalSpinner (false);
 }
 
 const displayLessonWord = (words) => {
@@ -135,3 +150,17 @@ const displayLessons = (lessons) => {
 }
 
 loadLessons ();
+
+document.getElementById ('search-btn').addEventListener ('click', () => {
+  const inputSearch = document.getElementById ('input-search');
+  const searchValue = inputSearch.value.trim ().toLowerCase ();
+  console.log(searchValue);
+  
+  fetch ('https://openapi.programming-hero.com/api/words/all')
+  .then (res => res.json ())
+  .then (data => {
+    const allWords = data.data;
+    const filterWords = allWords.filter (word => word.word.toLowerCase ().includes (searchValue));
+    displayLessonWord (filterWords);
+  })
+})
