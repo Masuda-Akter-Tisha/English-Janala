@@ -23,6 +23,46 @@ const loadLessonWord = (id) => {
     })
 }
 
+const loadWordDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch (url);
+  const details = await res.json ();
+  displayLoadWordDetails (details.data);
+}
+
+const displayLoadWordDetails = (details) => {
+  console.log(details);
+
+    const modalBox = document.getElementById ('modal-details');
+    modalBox.innerHTML = `
+     <div>
+        <h2 class="text-3xl font-semibold font-bangla">${details.word} (<i class="fa-solid fa-microphone-lines"></i>    :${details.pronunciation})</h2>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-2xl font-semibold">Meaning</h3>
+        <p class="text-2xl font-medium text-gray-900 font-bangla">${details.meaning}</p>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-2xl font-semibold">Example</h3>
+        <p class="text-2xl text-gray-700">${details.sentence}</p>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-2xl font-medium">সমার্থক শব্দ গুলো</h3>
+        <div class="space-x-5">
+          <div class="btn bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-5 py-2 text-xl text-gray-700">syn1</div>
+          <div class="btn bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-5 py-2 text-xl text-gray-700">syn2</div>
+          <div class="btn bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-5 py-2 text-xl text-gray-700">syn3</div>
+        </div>
+      </div>
+   `;
+
+  const modalWord = document.getElementById ('modal_word');
+  modalWord.showModal ();
+}
+
 const displayLessonWord = (words) => {
     const wordContainer = document.getElementById ('word-container');
     wordContainer.innerHTML = '';
@@ -47,7 +87,7 @@ const displayLessonWord = (words) => {
           <p class="text-xl font-medium">meaning / pronunciation</p>
           <div class="font-bangla text-3xl font-semibold text-gray-600">"${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'} / ${word.pronunciation ? word.pronunciation : 'উচ্চারণ পাওয়া যায়নি'}"</div>
           <div class="flex justify-between">
-            <button class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-circle-info"></i></button>
+            <button onclick = "loadWordDetails (${word.id})" class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-circle-info"></i></button>
             <button class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-volume-high"></i></button>
           </div>
         `;
