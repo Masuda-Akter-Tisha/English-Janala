@@ -1,3 +1,11 @@
+
+const createElements = (array) => {
+    const htmlElements = array.map (el => {
+       return `<span class="bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-3 py-2 text-sm text-gray-700">${el}</span>`
+    })
+    return htmlElements.join (" ");
+}
+
 const loadLessons = () => {
     fetch ('https://openapi.programming-hero.com/api/levels/all')
     .then (res => res.json ())
@@ -49,14 +57,9 @@ const displayLoadWordDetails = (details) => {
         <p class="text-2xl text-gray-700">${details.sentence}</p>
       </div>
 
-      <div class="space-y-3">
+      <div class="space-y-4">
         <h3 class="text-2xl font-medium">সমার্থক শব্দ গুলো</h3>
-        <div class="space-x-5">
-          <div class="btn bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-5 py-2 text-xl text-gray-700">syn1</div>
-          <div class="btn bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-5 py-2 text-xl text-gray-700">syn2</div>
-          <div class="btn bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-5 py-2 text-xl text-gray-700">syn3</div>
-        </div>
-      </div>
+        <div class="space-x-2">${createElements (details.synonyms)}</div>
    `;
 
   const modalWord = document.getElementById ('modal_word');
