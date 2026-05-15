@@ -1,4 +1,4 @@
-
+// for synonyms
 const createElements = (array) => {
     const htmlElements = array.map (el => {
        return `<span class="bg-[#EDF7FF] border border-[#D7E4EF] rounded-md px-3 py-2 text-sm text-gray-700">${el}</span>`
@@ -6,12 +6,14 @@ const createElements = (array) => {
     return htmlElements.join (" ");
 }
 
+// for speak word
 function pronounceWord(word) {
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = "en-EN"; // English
   window.speechSynthesis.speak(utterance);
 }
 
+// for manage word spinner
 const manageSpinner = (status) => {
   const spinner = document.getElementById ('spinner');
   const wordContainer = document.getElementById ('word-container');
@@ -24,6 +26,8 @@ const manageSpinner = (status) => {
     wordContainer.classList.remove ('hidden');
   }
 }
+
+// for manage modal spinner
 const manageModalSpinner = (status) => {
   const spinner = document.getElementById ('spinner');
   const modal = document.getElementById ('modal-details');
@@ -37,12 +41,14 @@ const manageModalSpinner = (status) => {
   }
 }
 
+// load level
 const loadLessons = () => {
     fetch ('https://openapi.programming-hero.com/api/levels/all')
     .then (res => res.json ())
     .then (json => displayLessons (json.data))
 }
 
+// for remove active class
 const removeActive = () => {
   const lessonBtn = document.querySelectorAll ('.lesson-btn');
   lessonBtn.forEach (btn => {
@@ -50,6 +56,7 @@ const removeActive = () => {
   })
 }
 
+// load level word
 const loadLessonWord = (id) => {
     manageSpinner (true);
     const url = `https://openapi.programming-hero.com/api/level/${id}`
@@ -63,6 +70,7 @@ const loadLessonWord = (id) => {
     })
 }
 
+// for modal word
 const loadWordDetails = async (id) => {
   manageModalSpinner (true);
   const url = `https://openapi.programming-hero.com/api/word/${id}`;
@@ -71,6 +79,7 @@ const loadWordDetails = async (id) => {
   displayLoadWordDetails (details.data);
 }
 
+// display modal
 const displayLoadWordDetails = (details) => {
   console.log(details);
 
@@ -101,6 +110,7 @@ const displayLoadWordDetails = (details) => {
   manageModalSpinner (false);
 }
 
+// display level word
 const displayLessonWord = (words) => {
     const wordContainer = document.getElementById ('word-container');
     wordContainer.innerHTML = '';
@@ -135,6 +145,7 @@ const displayLessonWord = (words) => {
     manageSpinner (false);
 }
 
+// display level 
 const displayLessons = (lessons) => {
       // 1.get level container and empty the container
       const levelContainer = document.getElementById ('level-container');
@@ -157,6 +168,7 @@ const displayLessons = (lessons) => {
 
 loadLessons ();
 
+// search word
 document.getElementById ('search-btn').addEventListener ('click', () => {
   removeActive ();
   const inputSearch = document.getElementById ('input-search');
