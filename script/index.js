@@ -6,6 +6,12 @@ const createElements = (array) => {
     return htmlElements.join (" ");
 }
 
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 const manageSpinner = (status) => {
   const spinner = document.getElementById ('spinner');
   const wordContainer = document.getElementById ('word-container');
@@ -121,7 +127,7 @@ const displayLessonWord = (words) => {
           <div class="font-bangla text-3xl font-semibold text-gray-600">"${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'} / ${word.pronunciation ? word.pronunciation : 'উচ্চারণ পাওয়া যায়নি'}"</div>
           <div class="flex justify-between">
             <button onclick = "loadWordDetails (${word.id})" class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-circle-info"></i></button>
-            <button class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-volume-high"></i></button>
+            <button onclick = "pronounceWord ('${word.word}')" class="btn bg-sky-100 hover:bg-sky-200"><i class="fa-solid fa-volume-high"></i></button>
           </div>
         `;
         wordContainer.appendChild (cardDiv);
@@ -152,6 +158,7 @@ const displayLessons = (lessons) => {
 loadLessons ();
 
 document.getElementById ('search-btn').addEventListener ('click', () => {
+  removeActive ();
   const inputSearch = document.getElementById ('input-search');
   const searchValue = inputSearch.value.trim ().toLowerCase ();
   console.log(searchValue);
